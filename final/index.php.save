@@ -1,0 +1,41 @@
+<?php
+$link = mysqli_connect('localhost', 'root', 'Timmsqlp24');
+if (!$link)
+{
+  $output = 'Unable to connect to the database server.';
+  include 'output.html.php';
+  exit();
+}
+if (!mysqli_set_charset($link, 'utf8'))
+{
+  $output = 'Unable to set database connection encoding.';
+  include 'output.html.php';
+  exit();
+}
+if (!mysqli_select_db($link, 'attendance'))
+{
+  $output = 'Unable to locate the attendance database.';
+  include 'output.html.php';
+  exit();
+}
+$output = 'Database connection established.';
+
+$query = "SELECT * FROM students";
+$result = mysqli_query($link, $query);
+
+
+while ($row = mysqli_fetch_array($result))
+{
+$output .= $row['LastName']."<br>";
+}
+
+//FirstName = mysqli_real_escape_string($link, $_REQUEST['FirstName']);
+//$LastName = mysqli_real_escape_string($link, $_REQUEST['LastName']);
+$sql = "INSERT INTO students (StudentID,FirstName, LastName) VALUES (3,"Brent", "Ted")";
+
+
+
+
+include 'output.html.php';
+
+?>
