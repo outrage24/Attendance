@@ -12,7 +12,13 @@ if($_FILES["scanner"]["error"] > 0){
 */
 
 
+$objectiveString = $_POST['objectives'];
 
+if (preg_match('/[\'^£$%&*()}{@#~?><>|=_+¬-]/', $objectiveString))
+{
+ $outputScanner.= " WOOOHH, No Need for HTML Special Chars in Objectives ";
+}
+else{
 
 // Create Class from Form
 $insert = " INSERT INTO Class (ClassType, Date) Values('".$_POST['classType']."','".$_POST['date']."')";
@@ -34,16 +40,19 @@ $outputScanner.= '<br>'."File Stored to ScannerBackup";
 }
 
 //Insert objectives and create row in objective tabl
-$objectiveString = $_POST['objectives'];
+
+
 $objectiveNumbers = explode(",", $objectiveString);
 for( $i = 0; $i< count($objectiveNumbers); $i++){
 $insert = "INSERT INTO objectives (ObjectiveNumber, ClassID) VALUES ('$objectiveNumbers[$i]', '$classID')";
 if(mysqli_query($link, $insert)){
-$outputScanner .= '<br>'."Objective Table updated";
+$outputScanner .= '<br>'."Objective Table updated for Objective ".$objectiveNumbers[$i]."";
 }
 
 
 }
+}
+
 //Parse file into Each name available
 $array = explode(PHP_EOL,$fileString);
 for( $i = 0; $i < count($array); $i++){

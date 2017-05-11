@@ -23,16 +23,10 @@ if (!mysqli_select_db($link, 'attendance'))
   include 'output.html.php';
   exit();
 }
-
-
-if($_POST['inputUsername'] == 'Brent' && $_POST['inputPassword'] != NULL){
-
 $output = 'Database connection established.';
-
 
 $query = "SELECT FirstName, LastName FROM students";
 $result = mysqli_query($link, $query);
-
 
 while ($row = mysqli_fetch_array($result))
 {
@@ -40,9 +34,8 @@ while ($row = mysqli_fetch_array($result))
 $studentList .= $row['FirstName']." ".$row['LastName']."<br>";
 }
 
-include 'home.html.php';
-
-
+if($_POST['lastname'] != NULL && $_POST['firstname'] != NULL){
+include 'insert.html.php';
 }
 else if(isset($_POST['date'])){
 	if(!is_uploaded_file($_FILES['scanner']['tmp_name']) || $_POST['classSelect'] == NULL || $_POST['objectives'] == NULL){
@@ -60,7 +53,8 @@ else if(isset($_POST['sFName']) || isset($_POST['sLName'])){
 	 include 'search.php';
 	}
 }
-else{
-include 'login.html.php';
-}
+
+
+include 'output.html.php';
+
 ?>
